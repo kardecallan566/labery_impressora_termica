@@ -1,0 +1,1 @@
+# labery_impressora_termica
