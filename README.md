@@ -1,638 +1,612 @@
-# Web App Template (Static Frontend)
+# 🏷️ Labery - ZPL Thermal Label Editor
 
-Pure React 19 + Tailwind 4 template with shadcn/ui baked in. **Use this README as the checklist for shipping static experiences.**
+**Aplicação Desktop Profissional para Renderização, Edição Visual e Impressão de Etiquetas Térmicas ZPL**
 
-> **Note:** This template includes a minimal `shared/` and `server/` directory with placeholder types to support imported templates. These are just compatibility placeholders - web-static remains a true static-only template without API functionality.
+Uma alternativa completa e offline ao Labelary Viewer com edição visual avançada, otimização térmica inteligente e exportação em múltiplos formatos.
+
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Node Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue)
+![React](https://img.shields.io/badge/React-19-61dafb)
+![Electron](https://img.shields.io/badge/Electron-42-47848f)
 
 ---
 
-## Stack Overview
-- Client-only routing powered by React + Wouter.
-- Design tokens live entirely in `client/src/index.css`—keep that file intact.
+## 📋 Índice
 
-## File Structure
+- [Características](#características)
+- [Tecnologias](#tecnologias)
+- [Instalação](#instalação)
+- [Como Usar](#como-usar)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Documentação](#documentação)
+- [Atalhos de Teclado](#atalhos-de-teclado)
+- [Suporte a Comandos ZPL](#suporte-a-comandos-zpl)
+- [Troubleshooting](#troubleshooting)
+- [Contribuindo](#contribuindo)
+- [Licença](#licença)
+
+---
+
+## ✨ Características
+
+### 🎯 Funcionalidades Principais
+
+- **✅ Parser ZPL Completo**: Suporte a todos os comandos ZPL principais com geração de AST
+- **✅ Editor Visual Avançado**: Drag & drop, resize, rotate, edição de propriedades
+- **✅ Preview em Tempo Real**: Renderização instantânea de mudanças
+- **✅ 100% Offline**: Funciona completamente local, sem dependência de internet
+- **✅ Exportação Multi-formato**: PDF, PNG, SVG e ZPL
+- **✅ Otimização Térmica**: Detecção automática e correção de problemas de impressão
+
+### 🔧 Recursos Avançados
+
+| Recurso | Descrição |
+|---------|-----------|
+| **Otimização Térmica** | Análise automática e sugestões de melhoria para qualidade de impressão |
+| **Sistema de Templates** | Salve templates com variáveis dinâmicas para reutilização |
+| **Múltiplas Resoluções** | Suporte a 203, 300 e 600 DPI |
+| **Compatibilidade** | Zebra, Elgin, Argox, TSC, Datamax |
+| **Ferramentas de Precisão** | Grid, régua, snap magnético, zoom infinito |
+| **Atalhos Profissionais** | Ctrl+Z, Ctrl+S, Ctrl+P e muito mais |
+| **Dark Mode** | Interface amigável para longas sessões de trabalho |
+| **Undo/Redo Ilimitado** | Histórico completo de alterações |
+
+### 📦 Elementos Suportados
+
+- **Texto**: Com tipografia avançada, stroke, shadow
+- **Códigos de Barras**: Code128, Code39, EAN, UPC, Codabar, ITF14
+- **QR Codes**: Com controle de correção de erro
+- **DataMatrix**: Código 2D compacto
+- **PDF417**: Código de barras empilhado
+- **Gráficos**: Linhas, caixas, círculos
+- **Imagens**: GRF, Z64, PNG, JPEG, BMP
+
+---
+
+## 🛠️ Tecnologias
+
+### Frontend
+- **React 19** - UI moderna e reativa
+- **TypeScript 5.6** - Type-safe development
+- **TailwindCSS 4** - Estilização utilitária
+- **Zustand** - Gerenciamento de estado
+- **React-Konva** - Canvas interativo (pronto para implementação)
+- **shadcn/ui** - Componentes UI profissionais
+
+### Desktop
+- **Electron 42** - Aplicação desktop cross-platform
+- **Electron-Builder** - Build e distribuição
+
+### Exportação & Processamento
+- **jsPDF** - Geração de PDFs
+- **canvas** - Renderização de imagens
+- **qrcode** - Geração de QR codes
+- **barcode** - Geração de códigos de barras
+
+### Validação & Utilidades
+- **Zod** - Schema validation
+- **UUID** - Identificadores únicos
+
+---
+
+## 🚀 Instalação
+
+### Pré-requisitos
+
+```bash
+# Node.js 18+ e pnpm
+node --version  # v18.0.0 ou superior
+pnpm --version  # 10.4.1 ou superior
+```
+
+### Setup Local
+
+```bash
+# 1. Clone o repositório
+git clone https://github.com/kardecallan566/labery_impressora_termica.git
+cd labery_impressora_termica
+
+# 2. Instale as dependências
+pnpm install
+
+# 3. Inicie o servidor de desenvolvimento
+pnpm dev
+
+# Em outro terminal, inicie o Electron (quando pronto)
+pnpm electron-dev
+```
+
+### Build para Produção
+
+```bash
+# Build web
+pnpm build
+
+# Build Electron (Windows, macOS, Linux)
+pnpm build:electron
+
+# Distribuir
+pnpm dist
+```
+
+---
+
+## 📖 Como Usar
+
+### Fluxo Básico
+
+#### 1️⃣ Importar Código ZPL
 
 ```
-client/
-  public/       ← Small configuration files ONLY (favicon.ico, robots.txt). DO NOT put images/media here.
-  src/
-    pages/      ← Page-level components
-    components/ ← Reusable UI & shadcn/ui
-    contexts/   ← React contexts
-    hooks/      ← Custom React hooks
-    lib/        ← Utility helpers
-    App.tsx     ← Routes & top-level layout
-    main.tsx    ← React entry point
-    index.css   ← global style
-server/         ← Placeholder for imported template compatibility
-shared/         ← Placeholder for imported template compatibility
-  const.ts      ← Shared constants
+1. Cole o código ZPL no editor de código (esquerda)
+2. O preview atualiza automaticamente
+3. Os elementos aparecem na árvore de elementos
 ```
 
-### ⚠️ Handling Images & Media
+#### 2️⃣ Editar Visualmente
 
-**DO NOT** store images, videos, or large assets in `client/public/` or `client/src/assets/`. Local media files will cause deployment timeouts.
+```
+1. Clique em um elemento para selecioná-lo
+2. Arraste para mover
+3. Use as alças para redimensionar
+4. Painel de propriedades para edição detalhada
+```
 
-**Required workflow:**
-1. Upload assets using the CLI: `manus-upload-file --webdev path/to/image.png`
-2. Use the returned storage path directly in your code: `<img src="/manus-storage/image_a1b2c3d4.png" />`
-3. Store the original local file in `/home/ubuntu/webdev-static-assets/` (outside the project directory)
+#### 3️⃣ Otimizar
 
-Only small configuration files like `favicon.ico`, `robots.txt`, and `manifest.json` belong in `client/public/`.
+```
+1. Clique no ícone de raio (⚡) na toolbar
+2. Revise as sugestões no painel "Optimize"
+3. Aplique correções automáticas
+```
 
-Files in `client/public` are available at the root of your site—reference them with absolute paths (`/robots.txt`, etc.) from HTML templates, JSX, or meta tags.
+#### 4️⃣ Exportar
 
----
+```
+1. Clique em Download (↓) na toolbar
+2. Escolha o formato (PDF, PNG, SVG, ZPL)
+3. Configure opções de exportação
+4. Clique em "Exportar"
+```
 
-## 🎯 Development Workflow
+### Exemplo: Criar Etiqueta de Envio
 
-1. **Choose a design style** before you write any frontend code according to Design Guide (color, font, shadow, art style). Tell user what you chose. Remember to edit `client/src/index.css` for global theming and add needed font using google font cdn in `client/index.html`.
-2. **Compose pages** in `client/src/pages/`. Keep sections modular so they can be reused across routes.
-3. **Share primitives** via `client/src/components/`—extend shadcn/ui when needed instead of duplicating markup.
-4. **Keep styling consistent** by relying on existing Tailwind tokens (spacing, colors, typography).
-5. **Fetch external data** with `useEffect` if the site needs dynamic content from public APIs.
----
+```zpl
+^XA
+^PW800
+^LL400
+^FO50,50
+^A0,50
+^FDJohn Doe^FS
+^FO50,120
+^A0,30
+^FD123 Main Street^FS
+^FO50,200
+^BQN,2,10
+^FDQA,https://example.com^FS
+^XZ
+```
 
-## 🎨 Frontend Development Guidelines
-
-**UI & Styling:**
-- Prefer shadcn/ui components for interactions to keep a modern, consistent look; import from `@/components/ui/*` (e.g., `button`, `card`, `dialog`).
-- Compose Tailwind utilities with component variants for layout and states; avoid excessive custom CSS. Use built-in `variant`, `size`, etc. where available.
-- Preserve design tokens: keep the `@layer base` rules in `client/src/index.css`. Utilities like `border-border` and `font-sans` depend on them.
-- Consistent design language: use spacing, radius, shadows, and typography via tokens. Extract shared UI into `components/` for reuse instead of copy‑paste.
-- Accessibility and responsiveness: keep visible focus rings and ensure keyboard reachability; design mobile‑first with thoughtful breakpoints.
-- Theming: Choose dark/light theme to start with for ThemeProvider according to your design style (dark or light bg), then manage colors pallette with CSS variables in `client/src/index.css` instead of hard‑coding to keep global consistency.
-- Micro‑interactions and empty states: add motion, empty states, and icons tastefully to improve quality without distracting from content.
-- Navigation: For internal tools/admin panels, use persistent sidebar. For public-facing apps, design navigation based on content structure (top nav, side nav, or contextual)—ensure clear escape routes from all pages.
-- Placeholder UI elements: When adding structural placeholders (nav items, CTAs) for not-yet-implemented features, show toast on click ("Feature coming soon"). Inform user which elements are placeholders when presenting work.
-
-**React Best Practices:**
-- Never call setState/navigation in render phase → wrap in `useEffect`
-
-**Customized Defaults:**
-This template customizes some Tailwind/shadcn defaults for simplified usage:
-- `.container` is customized to auto-center and add responsive padding (see `index.css`). Use directly without `mx-auto`/`px-*`. For custom widths, use `max-w-*` with `mx-auto px-4`.
-- `.flex` is customized to have `min-width:0` and `min-height:0` by default
-- `button` variant `outline` uses transparent background (not `bg-background`). Add bg color class manually if needed.
-
----
-
-## 🎨 Design Guide
-
-When generating frontend UI, avoid generic patterns that lack visual distinction:
-- Avoid generic full-page centered layouts—prefer asymmetric/sidebar/grid structures for landing pages and dashboards
-- When user provides vague requirements, make creative design decisions (choose specific color palette, typography, layout approach)
-- Prioritize visual diversity: combine different design systems (e.g., one color scheme + different typography + another layout principle)
-- For landing pages: prefer asymmetric layouts, specific color values (not just "blue"), and textured backgrounds over flat colors
-- For dashboards: use defined spacing systems, soft shadows over borders, and accent colors for hierarchy
+1. Cole o código acima no editor
+2. Veja a etiqueta renderizada no preview
+3. Clique em ⚡ para otimizar
+4. Exporte como PDF
 
 ---
 
-## Animation Guide
+## 📁 Estrutura do Projeto
 
-Bake motion taste in from the first line of code. Snappy, physically intuitive interactions are not a polish pass — they are part of the initial build.
-- Decide whether to animate at all: keyboard-initiated actions (command palettes, shortcuts) must be instant — never animate them. High-frequency interactions (hover, list nav) should be minimal. Reserve richer motion for occasional events (modals, drawers, toasts) and rare delight moments (onboarding).
-- Keep UI animations under 300ms. A 180ms dropdown feels significantly better than a 400ms one. Typical ranges: button press 100–160ms, tooltips 125–200ms, dropdowns 150–250ms, modals/drawers 200–500ms.
-- Use strong custom easings, not the weak CSS defaults. Default to a snappy ease-out for entering/exiting UI: `--ease-out: cubic-bezier(0.23, 1, 0.32, 1);`. For moving/morphing use `--ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);`. NEVER use `ease-in` for UI animations — it feels sluggish.
-- Buttons must feel responsive: add `transform: scale(0.97)` on `:active` with a ~160ms ease-out transition so the UI confirms it heard the user.
-- Never animate from `scale(0)` — nothing in the real world appears from nothing. Start from `scale(0.95)` combined with `opacity: 0`.
-- Origin-aware popovers/dropdowns: scale in from the trigger point (e.g. `transform-origin: var(--radix-popover-content-transform-origin)`). Modals are the exception and stay centered.
-- Prefer CSS transitions over @keyframes for dynamic UI state. Transitions can be interrupted and reversed smoothly mid-flight; keyframes restart from zero and feel broken when interrupted.
-- Only animate `transform` and `opacity` for motion — they run on the GPU and skip layout/paint. Avoid animating `width`, `height`, `padding`, `margin`, `top/left` unless absolutely necessary.
-- Stagger grouped entrances by 30–80ms per item to create a cascading reveal instead of a wall of motion.
-- Asymmetric timing for deliberate actions: hold-to-confirm should be slow and linear on press (e.g. 2s linear), but release/cancel should snap back fast (~200ms ease-out).
-- Respect `prefers-reduced-motion`: gate non-essential motion behind `@media (prefers-reduced-motion: no-preference)`.
+```
+labery-zpl-editor/
+├── client/                          # Frontend React
+│   ├── src/
+│   │   ├── pages/
+│   │   │   ├── Editor.tsx          # Página principal do editor
+│   │   │   ├── Home.tsx            # Página inicial
+│   │   │   └── NotFound.tsx        # 404
+│   │   ├── components/
+│   │   │   ├── ui/                 # shadcn/ui components
+│   │   │   ├── Editor/             # Componentes do editor
+│   │   │   │   ├── Canvas.tsx
+│   │   │   │   ├── Toolbar.tsx
+│   │   │   │   ├── PropertiesPanel.tsx
+│   │   │   │   ├── ElementTree.tsx
+│   │   │   │   └── CodeEditor.tsx
+│   │   │   └── Dialogs/
+│   │   ├── lib/
+│   │   │   ├── zpl/                # Parser e renderizador ZPL
+│   │   │   │   ├── parser.ts       # Parser com AST
+│   │   │   │   ├── types.ts        # Tipos TypeScript
+│   │   │   │   ├── renderer.ts     # Renderizador canvas
+│   │   │   │   ├── optimization.ts # Otimização térmica
+│   │   │   │   └── commands/       # Handlers de comandos
+│   │   │   ├── export/             # Exportação
+│   │   │   │   ├── index.ts        # API principal
+│   │   │   │   ├── canvas.ts       # Renderização canvas
+│   │   │   │   ├── svg.ts          # Geração SVG
+│   │   │   │   └── zpl.ts          # Geração ZPL
+│   │   │   ├── templates.ts        # Sistema de templates
+│   │   │   └── utils.ts            # Utilidades
+│   │   ├── store/
+│   │   │   ├── editorStore.ts      # Estado global (Zustand)
+│   │   │   └── preferencesStore.ts # Preferências
+│   │   ├── hooks/
+│   │   │   ├── useKeyboardShortcuts.ts
+│   │   │   ├── useZPLParser.ts
+│   │   │   └── useThermalOptimization.ts
+│   │   ├── contexts/
+│   │   │   └── ThemeContext.tsx    # Tema (light/dark)
+│   │   ├── App.tsx                 # Componente raiz
+│   │   ├── main.tsx                # Entry point
+│   │   └── index.css               # Estilos globais
+│   ├── index.html
+│   └── public/
+├── electron/                        # Processo principal Electron
+│   ├── main.ts                     # Criação de janela, menu
+│   └── preload.ts                  # Bridge IPC seguro
+├── server/                         # Backend (placeholder)
+├── shared/                         # Tipos compartilhados
+├── ARCHITECTURE.md                 # Documentação técnica detalhada
+├── README_LABERY.md                # README adicional
+├── electron-builder.json           # Configuração de build
+├── vite.config.ts                  # Configuração Vite
+├── tsconfig.json                   # Configuração TypeScript
+└── package.json                    # Dependências
+```
 
 ---
 
-## Pre-built Components
+## ⌨️ Atalhos de Teclado
 
-Before implementing UI features, check if these components already exist:
-
-Maps:
-- `client/src/components/Map.tsx` - Google Maps integration with proxy authentication. Provides MapView component with onMapReady callback for initializing Google Maps services (Places, Geocoder, Directions, Drawing, etc.). All map functionality works directly in the browser.
-
-When implementing features that match these categories, MUST evaluate the component first to decide whether to use or customize it.
-
----
-
-## 🗺️ Maps Integration
-
-**CRITICAL: The Manus proxy provides FULL access to ALL Google Maps features** - including advanced drawing, heatmaps, Street View, all layers, Places API, etc. Do NOT ask users for Google Map API keys - authentication is automatic.
-
-**Implementation:**
-- Frontend: Import MapView from `client/src/components/Map.tsx` and initialize ANY Google Maps service (geocoding, directions, places, drawing, visualization, geometry, etc.) in the onMapReady callback. ALL Google Maps JavaScript API features work directly in the browser.
-
-NEVER use external map libraries or request API keys from users - the Manus proxy handles everything automatically with no feature limitations.
+| Atalho | Ação | Plataforma |
+|--------|------|-----------|
+| `Ctrl+Z` / `Cmd+Z` | Desfazer | Windows / macOS |
+| `Ctrl+Y` / `Cmd+Y` | Refazer | Windows / macOS |
+| `Ctrl+S` / `Cmd+S` | Salvar | Windows / macOS |
+| `Ctrl+E` / `Cmd+E` | Exportar | Windows / macOS |
+| `Ctrl+P` / `Cmd+P` | Imprimir | Windows / macOS |
+| `Delete` / `Backspace` | Deletar selecionado | Todos |
+| `Escape` | Desselecionar tudo | Todos |
+| `Arrow Keys` | Mover selecionado | Todos |
+| `Ctrl++` / `Cmd++` | Zoom in | Windows / macOS |
+| `Ctrl+-` / `Cmd+-` | Zoom out | Windows / macOS |
+| `Ctrl+0` / `Cmd+0` | Reset zoom | Windows / macOS |
 
 ---
 
-## ✅ Launch Checklist
-- [ ] UI layout and navigation structure correct, all image src valid.
-- [ ] Success + error paths verified in the browser
+## 📋 Suporte a Comandos ZPL
+
+### Comandos Implementados
+
+#### Controle de Etiqueta
+| Comando | Descrição |
+|---------|-----------|
+| `^XA` | Início de etiqueta |
+| `^XZ` | Fim de etiqueta |
+| `^PW` | Largura da etiqueta (dots) |
+| `^LL` | Altura da etiqueta (dots) |
+| `^PQ` | Quantidade de impressão |
+| `^PR` | Velocidade de impressão |
+| `^MD` | Densidade/escuridão |
+
+#### Posicionamento
+| Comando | Descrição |
+|---------|-----------|
+| `^FO` | Origem do campo (X,Y) |
+| `^FT` | Origem do campo (alternativa) |
+| `^LH` | Home da etiqueta |
+
+#### Texto
+| Comando | Descrição |
+|---------|-----------|
+| `^A0` | Fonte escalável |
+| `^AD` | Fonte escalável (bold) |
+| `^CF` | Mudar fonte |
+| `^FB` | Bloco de texto |
+| `^FD` | Dados do campo |
+| `^FS` | Separador de campo |
+
+#### Códigos de Barras
+| Comando | Descrição |
+|---------|-----------|
+| `^BC` | Code128 |
+| `^B3` | Code39 |
+| `^BE` | EAN13 |
+| `^BU` | UPCA |
+| `^BQN` | QR Code |
+
+#### Gráficos
+| Comando | Descrição |
+|---------|-----------|
+| `^GB` | Caixa gráfica |
+| `^GC` | Círculo gráfico |
+| `^GD` | Linha diagonal |
+
+#### Imagens
+| Comando | Descrição |
+|---------|-----------|
+| `^XG` | Recuperar gráfico |
+| `~DG` | Download de gráfico |
+
+#### Configuração
+| Comando | Descrição |
+|---------|-----------|
+| `^CI` | Conjunto de caracteres |
+| `^MM` | Modo de medida |
+| `^FX` | Comentário |
 
 ---
 
-## Core File References
+## 🔍 Otimização Térmica
 
-`package.json`
-```tsx
-{
-  "name": "labery-zpl-editor",
-  "version": "1.0.0",
-  "type": "module",
-  "license": "MIT",
-  "scripts": {
-    "dev": "vite --host",
-    "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
-    "start": "NODE_ENV=production node dist/index.js",
-    "preview": "vite preview --host",
-    "check": "tsc --noEmit",
-    "format": "prettier --write ."
-  },
-  "dependencies": {
-    "@hookform/resolvers": "^5.2.2",
-    "@radix-ui/react-accordion": "^1.2.12",
-    "@radix-ui/react-alert-dialog": "^1.1.15",
-    "@radix-ui/react-aspect-ratio": "^1.1.7",
-    "@radix-ui/react-avatar": "^1.1.10",
-    "@radix-ui/react-checkbox": "^1.3.3",
-    "@radix-ui/react-collapsible": "^1.1.12",
-    "@radix-ui/react-context-menu": "^2.2.16",
-    "@radix-ui/react-dialog": "^1.1.15",
-    "@radix-ui/react-dropdown-menu": "^2.1.16",
-    "@radix-ui/react-hover-card": "^1.1.15",
-    "@radix-ui/react-label": "^2.1.7",
-    "@radix-ui/react-menubar": "^1.1.16",
-    "@radix-ui/react-navigation-menu": "^1.2.14",
-    "@radix-ui/react-popover": "^1.1.15",
-    "@radix-ui/react-progress": "^1.1.7",
-    "@radix-ui/react-radio-group": "^1.3.8",
-    "@radix-ui/react-scroll-area": "^1.2.10",
-    "@radix-ui/react-select": "^2.2.6",
-    "@radix-ui/react-separator": "^1.1.7",
-    "@radix-ui/react-slider": "^1.3.6",
-    "@radix-ui/react-slot": "^1.2.3",
-    "@radix-ui/react-switch": "^1.2.6",
-    "@radix-ui/react-tabs": "^1.1.13",
-    "@radix-ui/react-toggle": "^1.1.10",
-    "@radix-ui/react-toggle-group": "^1.1.11",
-    "@radix-ui/react-tooltip": "^1.2.8",
-    "axios": "^1.12.0",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "cmdk": "^1.1.1",
-    "embla-carousel-react": "^8.6.0",
-    "express": "^4.21.2",
-    "framer-motion": "^12.23.22",
-    "input-otp": "^1.4.2",
-    "lucide-react": "^0.453.0",
-    "nanoid": "^5.1.5",
-    "next-themes": "^0.4.6",
-    "react": "^19.2.1",
-    "react-day-picker": "^9.11.1",
-    "react-dom": "^19.2.1",
-    "react-hook-form": "^7.64.0",
-    "react-resizable-panels": "^3.0.6",
-    "recharts": "^2.15.2",
-    "sonner": "^2.0.7",
-    "streamdown": "^1.4.0",
-    "tailwind-merge": "^3.3.1",
-    "tailwindcss-animate": "^1.0.7",
-    "vaul": "^1.1.2",
-    "wouter": "^3.3.5",
-    "zod": "^4.1.12"
-  },
-  "devDependencies": {
-    "@builder.io/vite-plugin-jsx-loc": "^0.1.1",
-    "@tailwindcss/typography": "^0.5.15",
-    "@tailwindcss/vite": "^4.1.3",
-    "@types/express": "4.17.21",
-    "@types/google.maps": "^3.58.1",
-    "@types/node": "^24.7.0",
-    "@types/react": "^19.2.1",
-    "@types/react-dom": "^19.2.1",
-    "@vitejs/plugin-react": "^5.0.4",
-    "add": "^2.0.6",
-    "autoprefixer": "^10.4.20",
-    "esbuild": "^0.25.0",
-    "pnpm": "^10.15.1",
-    "postcss": "^8.4.47",
-    "prettier": "^3.6.2",
-    "tailwindcss": "^4.1.14",
-    "tsx": "^4.19.1",
-    "tw-animate-css": "^1.4.0",
-    "typescript": "5.6.3",
-    "vite": "^7.1.7",
-    "vite-plugin-manus-runtime": "^0.0.57",
-    "vitest": "^2.1.4"
-  },
-  "packageManager": "pnpm@10.4.1+sha512.c753b6c3ad7afa13af388fa6d808035a008e30ea9993f58c6663e2bc5ff21679aa834db094987129aa4d488b86df57f7b634981b2f827cdcacc698cc0cfb88af",
-  "pnpm": {
-    "patchedDependencies": {
-      "wouter@3.7.1": "patches/wouter@3.7.1.patch"
+### Como Funciona
+
+A otimização térmica analisa automaticamente a etiqueta e detecta problemas comuns em impressoras térmicas:
+
+#### Problemas Detectados
+
+1. **Textos Pequenos** (< 10pt)
+   - Aumenta automaticamente para 10pt
+   - Aplica bold para melhor visibilidade
+
+2. **Linhas Finas** (< 1px)
+   - Aumenta espessura mínima
+   - Melhora legibilidade
+
+3. **QR Codes Pequenos** (< 30x30mm)
+   - Aumenta para tamanho mínimo recomendado
+   - Aumenta correção de erro
+
+4. **Códigos de Barras Fracos**
+   - Aumenta altura mínima (20mm)
+   - Aumenta espessura de barras (2px)
+
+### Modos de Otimização
+
+```typescript
+// Normal (padrão)
+thermalMode: 'normal'
+
+// Impressoras Fracas (aumenta tudo)
+thermalMode: 'weak'
+
+// Impressoras Fortes (permite mais detalhes)
+thermalMode: 'strong'
+```
+
+---
+
+## 📤 Sistema de Templates
+
+### Criar Template
+
+```typescript
+import { saveTemplate } from '@/lib/templates';
+
+const template = saveTemplate(
+  'Etiqueta de Envio',
+  'Template padrão para etiquetas de envio',
+  zplCode,
+  elements,
+  [
+    { 
+      name: 'destinatario', 
+      type: 'text', 
+      required: true,
+      defaultValue: ''
     },
-    "overrides": {
-      "tailwindcss>nanoid": "3.3.7"
+    { 
+      name: 'endereco', 
+      type: 'text', 
+      required: true,
+      defaultValue: ''
+    },
+    { 
+      name: 'codigo_rastreamento', 
+      type: 'barcode', 
+      required: true,
+      defaultValue: ''
     }
-  }
+  ]
+);
+```
+
+### Usar Template
+
+```typescript
+import { createLabelFromTemplate } from '@/lib/templates';
+
+const result = createLabelFromTemplate(templateId, {
+  destinatario: 'João Silva',
+  endereco: '123 Rua Principal, São Paulo',
+  codigo_rastreamento: 'BR123456789'
+});
+
+if (result.valid) {
+  // Usar result.zplCode
+} else {
+  // Mostrar erros: result.errors
 }
 ```
 
-`client/src/App.tsx`
-```tsx
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
-import ErrorBoundary from "./components/ErrorBoundary";
-import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
+### Gerenciar Templates
 
+```typescript
+import { 
+  getAllTemplates, 
+  updateTemplate, 
+  deleteTemplate,
+  searchTemplates 
+} from '@/lib/templates';
 
-function Router() {
-  return (
-    <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-    </Switch>
-  );
-}
+// Listar todos
+const templates = getAllTemplates();
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
+// Buscar
+const encontrados = searchTemplates('envio');
 
-function App() {
-  return (
-    <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="light"
-        // switchable
-      >
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
-      </ThemeProvider>
-    </ErrorBoundary>
-  );
-}
+// Atualizar
+updateTemplate(id, { name: 'Novo Nome' });
 
-export default App;
+// Deletar
+deleteTemplate(id);
 ```
 
-`client/src/pages/Home.tsx`
-```tsx
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { Streamdown } from 'streamdown';
-
-/**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Best Practices, Design Guide and Common Pitfalls
- */
-export default function Home() {
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
-
-  return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
-      </main>
-    </div>
-  );
-}
-```
-
-`client/src/index.css`
-```tsx
-@import "tailwindcss";
-@import "tw-animate-css";
-
-@custom-variant dark (&:is(.dark *));
-
-@theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
-
-:root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
-}
-
-.dark {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-500);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.85 0.005 65);
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.85 0.005 65);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.85 0.005 65);
-  --secondary: oklch(0.24 0.006 286.033);
-  --secondary-foreground: oklch(0.7 0.005 65);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground:  oklch(0.92 0.005 65);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.488 0.243 264.376);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.85 0.005 65);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground:  oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.488 0.243 264.376);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-  button:not(:disabled),
-  [role="button"]:not([aria-disabled="true"]),
-  [type="button"]:not(:disabled),
-  [type="submit"]:not(:disabled),
-  [type="reset"]:not(:disabled),
-  a[href],
-  select:not(:disabled),
-  input[type="checkbox"]:not(:disabled),
-  input[type="radio"]:not(:disabled) {
-    @apply cursor-pointer;
-  }
-}
-
-@layer components {
-  /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
-   */
-  .container {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
-    padding-right: 1rem;
-  }
-
-  .flex {
-    min-height: 0;
-    min-width: 0;
-  }
-
-  @media (min-width: 640px) {
-    .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
-      padding-right: 1.5rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .container {
-      padding-left: 2rem; /* 32px - desktop padding */
-      padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
-    }
-  }
-}
-```
-
-`client/index.html`
-```tsx
-<!doctype html>
-<html lang="en">
-
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>{{project_title}}</title>    
-    <!-- THIS IS THE START OF A COMMENT BLOCK, BLOCK TO BE DELETED: Google Fonts here, example:
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    THIS IS THE END OF A COMMENT BLOCK, BLOCK TO BE DELETED -->
-  </head>
-
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    <script
-      defer
-      src="%VITE_ANALYTICS_ENDPOINT%/umami"
-      data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
-  </body>
-
-</html>
-```
-
-`server/index.ts`
-```tsx
-import express from "express";
-import { createServer } from "http";
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-async function startServer() {
-  const app = express();
-  const server = createServer(app);
-
-  // Serve static files from dist/public in production
-  const staticPath =
-    process.env.NODE_ENV === "production"
-      ? path.resolve(__dirname, "public")
-      : path.resolve(__dirname, "..", "dist", "public");
-
-  app.use(express.static(staticPath));
-
-  // Handle client-side routing - serve index.html for all routes
-  app.get("*", (_req, res) => {
-    res.sendFile(path.join(staticPath, "index.html"));
-  });
-
-  const port = process.env.PORT || 3000;
-
-  server.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}/`);
-  });
-}
-
-startServer().catch(console.error);
-```
 ---
 
-## Common Pitfalls
+## 📊 Exportação
 
-### Infinite loading loops from unstable references
-**Anti-pattern:** Creating new objects/arrays in render that are used as query inputs
-```tsx
-// ❌ Bad: New Date() creates new reference every render → infinite queries
-const { data } = trpc.items.getByDate.useQuery({
-  date: new Date(), // ← New object every render!
-});
+### Opções de Exportação
 
-// ❌ Bad: Array/object literals in query input
-const { data } = trpc.items.getByIds.useQuery({
-  ids: [1, 2, 3], // ← New array reference every render!
-});
+#### PDF
+```typescript
+const options: PDFExportOptions = {
+  format: 'pdf',
+  dpi: 203,
+  quality: 95,
+  compression: true,
+  pageSize: 'custom',
+  pageWidth: 100,
+  pageHeight: 150,
+  margins: { top: 0, right: 0, bottom: 0, left: 0 }
+};
 ```
 
-**Correct approach:** Stabilize references with useState/useMemo
-```tsx
-// ✅ Good: Initialize once with useState
-const [date] = useState(() => new Date());
-const { data } = trpc.items.getByDate.useQuery({ date });
-
-// ✅ Good: Memoize complex inputs
-const ids = useMemo(() => [1, 2, 3], []);
-const { data } = trpc.items.getByIds.useQuery({ ids });
+#### PNG
+```typescript
+const options: ExportOptions = {
+  format: 'png',
+  dpi: 300,
+  quality: 100,
+  compression: true
+};
 ```
 
-**Why this happens:** TRPC queries trigger when input references change. Objects/arrays created in render have new references each time, causing infinite re-fetches.
-
-### Navigation dead-ends in subpages
-**Problem:** Creating nested routes without escape routes—no header nav, no sidebar, no back button.
-
-**Root cause:** Implementing individual pages before establishing global layout structure.
-
-**Solution:** Define layout wrapper in App.tsx first, then build pages inside it. For admin tools use DashboardLayout; for detail pages add back button with `router.back()`.
-
-### Invisible text from theme/color mismatches
-
-**Root cause:** Semantic colors (`bg-background`, `text-foreground`) are CSS variables that resolve based on ThemeProvider's active theme. Mismatches cause invisible text.
-
-**Two critical rules:**
-
-1. **Match theme to CSS variables:** If `defaultTheme="dark"` in App.tsx, ensure `.dark {}` in index.css has dark background + light foreground values
-2. **Always pair bg with text:** When using `bg-{semantic}`, MUST also use `text-{semantic}-foreground` (not automatic - text inherits from parent otherwise)
-
-**Quick reference:**
-```tsx
-// ✅ Theme + CSS alignment
-<ThemeProvider defaultTheme="dark">  {/* Must match .dark in index.css */}
-  <div className="bg-background text-foreground">...</div>
-</ThemeProvider>
-
-// ✅ Required class pairs
-<div className="bg-popover text-popover-foreground">...</div>
-<div className="bg-card text-card-foreground">...</div>
-<div className="bg-accent text-accent-foreground">...</div>
+#### SVG
+```typescript
+const options: ExportOptions = {
+  format: 'svg',
+  dpi: 96,
+  quality: 100,
+  compression: false
+};
 ```
 
-### Nested anchor tags in Link components
-**Problem:** Wrapping `<a>` tags inside another `<a>` or wouter's `<Link>` creates nested anchors and runtime errors.
-
-**Solution:** Pass children directly to Link—it already renders an `<a>` internally.
-```tsx
-// ❌ Bad: <Link><a>...</a></Link> or <a><a>...</a></a>
-// ✅ Good: <Link>...</Link> or just <a>...</a>
+#### ZPL
+```typescript
+const options: ExportOptions = {
+  format: 'zpl',
+  dpi: 203,
+  quality: 100,
+  compression: false
+};
 ```
-### Empty `Select.Item` values
 
-**Rule:** Every `<Select.Item>` must have a non-empty `value` prop—never `""`, `undefined`, or omitted.
+---
 
-**Rule:** Use sonner for toasts; do not add react-toastify or @radix-ui/react-toast
+## 🐛 Troubleshooting
 
-**Rule:** If you put placeholder components for App.tsx routes, you MUST replace them with actual components after your implementation.
+### ZPL Não Está Parseando
+
+**Problema**: Código ZPL não é reconhecido
+
+**Soluções**:
+1. Verifique se começa com `^XA` e termina com `^XZ`
+2. Valide a sintaxe dos comandos
+3. Verifique se há comandos não suportados
+4. Consulte a lista de [Comandos Suportados](#suporte-a-comandos-zpl)
+
+### Qualidade de Impressão Ruim
+
+**Problema**: Etiqueta fica desfocada ou ilegível
+
+**Soluções**:
+1. Clique no ícone ⚡ para otimizar automaticamente
+2. Aumente o tamanho das fontes (mínimo 10pt)
+3. Aumente a altura dos códigos de barras (mínimo 20mm)
+4. Verifique as configurações de densidade da impressora
+
+### Elementos Não Aparecem
+
+**Problema**: Elementos não são renderizados no preview
+
+**Soluções**:
+1. Verifique se `visible: true` no painel de propriedades
+2. Confirme se o elemento está dentro dos limites da etiqueta
+3. Tente resetar o zoom (Ctrl+0)
+4. Recarregue a aplicação
+
+### Exportação Falha
+
+**Problema**: Erro ao exportar para PDF/PNG
+
+**Soluções**:
+1. Verifique permissões de arquivo
+2. Tente outro formato de exportação
+3. Reduza o tamanho da etiqueta
+4. Verifique espaço em disco disponível
+
+---
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Por favor:
+
+1. **Fork** o repositório
+2. **Crie uma branch** para sua feature (`git checkout -b feature/amazing-feature`)
+3. **Commit** suas mudanças (`git commit -m 'Add amazing feature'`)
+4. **Push** para a branch (`git push origin feature/amazing-feature`)
+5. **Abra um Pull Request**
+
+### Padrões de Código
+
+- Use TypeScript para type safety
+- Siga o padrão de formatação (Prettier)
+- Adicione testes para novas features
+- Atualize a documentação
+
+---
+
+## 📝 Licença
+
+Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+
+---
+
+## 📞 Suporte
+
+- 📖 [Documentação Técnica](./ARCHITECTURE.md)
+- 🐛 [Issues](https://github.com/kardecallan566/labery_impressora_termica/issues)
+- 💬 [Discussões](https://github.com/kardecallan566/labery_impressora_termica/discussions)
+
+---
+
+## 🎯 Roadmap
+
+- [ ] Canvas interativo com React-Konva
+- [ ] Integração com impressoras reais
+- [ ] Suporte a DataMatrix e PDF417
+- [ ] Batch printing
+- [ ] Fila de impressão
+- [ ] Descoberta de impressoras de rede
+- [ ] Sincronização de templates na nuvem
+- [ ] Edição colaborativa
+- [ ] App mobile (React Native)
+- [ ] API para integração
+
+---
+
+## ✨ Créditos
+
+Desenvolvido com ❤️ pela equipe Labery
+
+**Labery ZPL Editor** - Edição profissional de etiquetas térmicas, offline e ilimitado.
+
+---
+
+<div align="center">
+
+**[⬆ Voltar ao topo](#-labery---zpl-thermal-label-editor)**
+
+</div>
